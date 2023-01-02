@@ -234,8 +234,8 @@ def main():
 
 		if st.button("Get Predicted Value"):
 			if training_df.shape[0] == 0:
-				st.write("The provided parameters do not exist in the training")
-			esle:
+				st.write["The provided parameters do not exist in the training")
+			else:
 				pred_df = monthly_training(location = location, sku = Product_Number, month = month)
 				st.balloons()
 				st.success("Predicted as: {}".format(pred_df))
