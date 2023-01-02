@@ -226,14 +226,15 @@ def main():
 		st.write('`You selected`', month, " `month`")
 
 		train_df = df_cleaned[(df_cleaned['depot'] == location) & (df_cleaned['item_no']==Product_Number) & (df_cleaned['month']==month)]
+		train_df = train_df.set_index("depot")
 
 		st.write(train_df)
 
-		pred_df = monthly_training(location = location, sku = Product_Number, month = month)
+		#pred_df = monthly_training(location = location, sku = Product_Number, month = month)
 
 		if st.button("Get Predicted Value"):
-			#st.write(pred_df)
-			
+			pred_df = monthly_training(location = location, sku = Product_Number, month = month)
+			st.ballon()
 			st.success("Predicted as: {}".format(pred_df))
 
 # Required to let Streamlit instantiate our web app.  
