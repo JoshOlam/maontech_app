@@ -25,11 +25,19 @@ import streamlit as st
 # Data dependencies
 import pandas as pd
 import numpy as np
-
+import psycopg2
+columns = ["region", "depot", "item_no", "tms", "ams", "month", "year"]
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.ensemble._forest import RandomForestRegressor
 
+
+conn = psycopg2.connect("host=maontech-db.cuslngvsj13a.eu-west-1.rds.amazonaws.com dbname=maontech_db user=postgres password=LbELB4tyVt7F2DrYk9nS")
+cursor = conn.cursor()
+cursor.execute("SELECT * FROM maontech_dataset")
+data = cursor.fetchall()
+df = pd.DataFrame(data, columns=columns)
+#st.write(data)
 df = pd.read_csv("data-1671661749260.csv")
 #print("Done loading data...1")
 
@@ -62,6 +70,7 @@ def _data_preprocessing(df):
     y_data = df_dummies['ams']
 
     return X_data, y_data
+
 
 def get_training_months(df:str, month: int):
     """Private helper function to get the training data
