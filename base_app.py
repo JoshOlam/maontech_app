@@ -233,7 +233,7 @@ def main():
 		#pred_df = monthly_training(location = location, sku = Product_Number, month = month)
 
 		if st.button("Get Predicted Value"):
-			if training_df.shape[0] == 0:
+			if train_df.shape[0] == 0:
 				st.write("The provided parameters do not exist in the training")
 			else:
 				pred_df = monthly_training(location = location, sku = Product_Number, month = month)
