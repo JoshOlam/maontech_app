@@ -233,9 +233,12 @@ def main():
 		#pred_df = monthly_training(location = location, sku = Product_Number, month = month)
 
 		if st.button("Get Predicted Value"):
-			pred_df = monthly_training(location = location, sku = Product_Number, month = month)
-			st.balloons()
-			st.success("Predicted as: {}".format(pred_df))
+			if training_df.shape[0] == 0:
+				st.write["The provided parameters do not exist in the training")
+			esle:
+				pred_df = monthly_training(location = location, sku = Product_Number, month = month)
+				st.balloons()
+				st.success("Predicted as: {}".format(pred_df))
 
 # Required to let Streamlit instantiate our web app.  
 if __name__ == '__main__':
