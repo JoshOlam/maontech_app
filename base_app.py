@@ -234,7 +234,7 @@ def main():
 
 		if st.button("Get Predicted Value"):
 			pred_df = monthly_training(location = location, sku = Product_Number, month = month)
-			st.ballon()
+			st.balloons()
 			st.success("Predicted as: {}".format(pred_df))
 
 # Required to let Streamlit instantiate our web app.  
