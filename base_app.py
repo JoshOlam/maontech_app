@@ -64,6 +64,23 @@ def _data_preprocessing(df):
     return X_data, y_data
 
 def get_training_months(df:str, month: int):
+    """Private helper function to get the training data
+    for the previous 3 months.
+
+    Parameters
+    ----------
+    df : str
+        The dataframe to be subset.
+
+    month : int
+        The month (within the range of 1 and 12) to get the training data for 
+
+    Returns
+    -------
+    df_train : A dataframe of the previous 3 months
+
+    df_pred : A dataframe of the month provided
+    """
     if month in range(1, 13):
         col = list(reversed(range(1,13)))
         col = col + [12,11,10]
@@ -79,8 +96,25 @@ def get_training_months(df:str, month: int):
         raise ValueError(f"Index '{month}' not within the range of 1 and 12")
 
 
-def monthly_training(location:str, sku:str, month:int):
-    
+def monthly_training(location: str, sku: str, month: int):
+    """Private helper function to predict the average monthly
+    sales (ams) based on a location, item_id and month.
+
+    Parameters
+    ----------
+    location : str
+        The location i.e. depot
+
+    sku : str
+        The item_id of the product
+
+    month : int
+        The month (within the range of 1 and 12)
+
+    Returns
+    -------
+    Predictions : The predicted values of "ams"
+    """
     X_data, y_data = _data_preprocessing(df)
     X_train, X_test, y_train, y_test = train_test_split(X_data,
                                                         y_data,
@@ -89,7 +123,8 @@ def monthly_training(location:str, sku:str, month:int):
                                                         shuffle=False)
     #print(f"Done preprocessing")
     rdf_ = RandomForestRegressor(random_state=42)
-    rdf_.fit(X_train, y_train)
+    #rdf_.fit(X_train, y_train)
+    rdf_.fit(X_data, y_data)
     #y_pred = rdf_.predict(X_test)
     #MSE = mean_squared_error(y_test, y_pred)
     #rmse = round(np.sqrt(MSE), 2)
@@ -111,11 +146,6 @@ def monthly_training(location:str, sku:str, month:int):
     prediction = rdf_.predict(df_pred)
     
     return prediction
-
-#raw = pd.read_csv("data-1671661749260.csv")
- 
-# Load the preprocessed data
-#df_cleaned = pd.read_pickle("resources/df_clean.pkl")
 
 #For data preprocessing
 def preprocess_df(df):
@@ -152,7 +182,7 @@ def main():
 
 		st.subheader("Sales Prediction")
 		if st.checkbox('Show raw data'): # data is hidden if box is unchecked
-			st.write(raw.head()) # will write the df to the page
+			st.write(df.head()) # will write the df to the page
 
 	# Building out the predication page
 	if selection == "Prediction":
